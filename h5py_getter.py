@@ -438,3 +438,9 @@ def get_year(data,songidx=0):
     Get release year from a HDF5 song file, by default the first song in it
     """
     return data['musicbrainz']['songs']['year'][songidx]
+
+def get_artist_name(data,songidx=0):
+    """
+    Get artist name from a HDF5 song file, by default the first song in it
+    """
+    return data['metadata']['songs']['artist_name'][songidx]
