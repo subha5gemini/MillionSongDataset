@@ -5,6 +5,8 @@ Created on Tue Apr 21 18:15:21 2020
 edited from hdf5_getters by Thierry Bertin-Mahieux (2010) Columbia University
 tb2332@columbia.edu
 """
+import numpy as np
+
 def get_num_songs(data,songidx=0):
     """
     Return the number of songs contained in this h5 file, i.e. the number of rows
@@ -109,9 +111,9 @@ def get_similar_artists(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['metadata']['songs'].shape[0] == songidx + 1:
-        return data['metadata']['similar_artists'][data['metadata']['songs']['idx_similar_artists'][songidx]:]
+        return data['metadata']['similar_artists'][data['metadata']['songs']['idx_similar_artists'][songidx]:].shape
     return data['metadata']['similar_artists'][data['metadata']['songs']['idx_similar_artists'][songidx]:
-                                            data['metadata']['songs']['idx_similar_artists'][songidx+1]]
+                                            data['metadata']['songs']['idx_similar_artists'][songidx+1]].shape
 
 def get_artist_terms(data,songidx=0):
     """
@@ -120,9 +122,9 @@ def get_artist_terms(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['metadata']['songs'].shape[0] == songidx + 1:
-        return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:]
+        return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:].shape
     return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:
-                                            data['metadata']['songs']['idx_artist_terms'][songidx+1]]
+                                            data['metadata']['songs']['idx_artist_terms'][songidx+1]].shape
 
 def get_artist_terms_freq(data,songidx=0):
     """
@@ -142,9 +144,9 @@ def get_artist_terms_weight(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['metadata']['songs'].shape[0] == songidx + 1:
-        return data['metadata']['artist_terms_weight'][data['metadata']['songs']['idx_artist_terms'][songidx]:]
+        return data['metadata']['artist_terms_weight'][data['metadata']['songs']['idx_artist_terms'][songidx]:].shape
     return data['metadata']['artist_terms_weight'][data['metadata']['songs']['idx_artist_terms'][songidx]:
-                                                data['metadata']['songs']['idx_artist_terms'][songidx+1]]
+                                                data['metadata']['songs']['idx_artist_terms'][songidx+1]].shape
 
 def get_analysis_sample_rate(data,songidx=0):
     """
@@ -249,9 +251,9 @@ def get_segments_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_start'][data['analysis']['songs']['idx_segments_start'][songidx]:]
-    return data['analysis']['segments_start'][data['analysis']['songs']['idx_segments_start'][songidx]:
-                                           data['analysis']['songs']['idx_segments_start'][songidx+1]]
+        return np.mean(data['analysis']['segments_start'][data['analysis']['songs']['idx_segments_start'][songidx]:])
+    return np.mean(data['analysis']['segments_start'][data['analysis']['songs']['idx_segments_start'][songidx]:
+                                           data['analysis']['songs']['idx_segments_start'][songidx+1]])
     
 def get_segments_confidence(data,songidx=0):
     """
@@ -260,9 +262,9 @@ def get_segments_confidence(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_confidence'][data['analysis']['songs']['idx_segments_confidence'][songidx]:]
-    return data['analysis']['segments_confidence'][data['analysis']['songs']['idx_segments_confidence'][songidx]:
-                                                data['analysis']['songs']['idx_segments_confidence'][songidx+1]]
+        return np.mean(data['analysis']['segments_confidence'][data['analysis']['songs']['idx_segments_confidence'][songidx]:])
+    return np.mean(data['analysis']['segments_confidence'][data['analysis']['songs']['idx_segments_confidence'][songidx]:
+                                                data['analysis']['songs']['idx_segments_confidence'][songidx+1]])
 
 def get_segments_pitches(data,songidx=0):
     """
@@ -271,9 +273,9 @@ def get_segments_pitches(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_pitches'][data['analysis']['songs']['idx_segments_pitches'][songidx]:,:]
+        return data['analysis']['segments_pitches'][data['analysis']['songs']['idx_segments_pitches'][songidx]:,:].shape
     return data['analysis']['segments_pitches'][data['analysis']['songs']['idx_segments_pitches'][songidx]:
-                                             data['analysis']['songs']['idx_segments_pitches'][songidx+1],:]
+                                             data['analysis']['songs']['idx_segments_pitches'][songidx+1],:].shape
 
 def get_segments_timbre(data,songidx=0):
     """
@@ -282,9 +284,9 @@ def get_segments_timbre(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_timbre'][data['analysis']['songs']['idx_segments_timbre'][songidx]:,:]
+        return data['analysis']['segments_timbre'][data['analysis']['songs']['idx_segments_timbre'][songidx]:,:].shape
     return data['analysis']['segments_timbre'][data['analysis']['songs']['idx_segments_timbre'][songidx]:
-                                             data['analysis']['songs']['idx_segments_timbre'][songidx+1],:]
+                                             data['analysis']['songs']['idx_segments_timbre'][songidx+1],:].shape
 
 def get_segments_loudness_max(data,songidx=0):
     """
@@ -293,9 +295,9 @@ def get_segments_loudness_max(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_loudness_max'][data['analysis']['songs']['idx_segments_loudness_max'][songidx]:]
-    return data['analysis']['segments_loudness_max'][data['analysis']['songs']['idx_segments_loudness_max'][songidx]:
-                                             data['analysis']['songs']['idx_segments_loudness_max'][songidx+1]]
+        return np.mean(data['analysis']['segments_loudness_max'][data['analysis']['songs']['idx_segments_loudness_max'][songidx]:])
+    return np.mean(data['analysis']['segments_loudness_max'][data['analysis']['songs']['idx_segments_loudness_max'][songidx]:
+                                             data['analysis']['songs']['idx_segments_loudness_max'][songidx+1]])
 
 def get_segments_loudness_max_time(data,songidx=0):
     """
@@ -304,9 +306,9 @@ def get_segments_loudness_max_time(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_loudness_max_time'][data['analysis']['songs']['idx_segments_loudness_max_time'][songidx]:]
+        return data['analysis']['segments_loudness_max_time'][data['analysis']['songs']['idx_segments_loudness_max_time'][songidx]:].shape
     return data['analysis']['segments_loudness_max_time'][data['analysis']['songs']['idx_segments_loudness_max_time'][songidx]:
-                                             data['analysis']['songs']['idx_segments_loudness_max_time'][songidx+1]]
+                                             data['analysis']['songs']['idx_segments_loudness_max_time'][songidx+1]].shape
     
 def get_segments_loudness_start(data,songidx=0):
     """
@@ -315,9 +317,9 @@ def get_segments_loudness_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['segments_loudness_start'][data['analysis']['songs']['idx_segments_loudness_start'][songidx]:]
-    return data['analysis']['segments_loudness_start'][data['analysis']['songs']['idx_segments_loudness_start'][songidx]:
-                                             data['analysis']['songs']['idx_segments_loudness_start'][songidx+1]]
+        return np.mean(data['analysis']['segments_loudness_start'][data['analysis']['songs']['idx_segments_loudness_start'][songidx]:])
+    return np.mean(data['analysis']['segments_loudness_start'][data['analysis']['songs']['idx_segments_loudness_start'][songidx]:
+                                             data['analysis']['songs']['idx_segments_loudness_start'][songidx+1]])
 
 def get_sections_start(data,songidx=0):
     """
@@ -326,9 +328,9 @@ def get_sections_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['sections_start'][data['analysis']['songs']['idx_sections_start'][songidx]:]
-    return data['analysis']['sections_start'][data['analysis']['songs']['idx_sections_start'][songidx]:
-                                             data['analysis']['songs']['idx_sections_start'][songidx+1]]
+        return np.mean(data['analysis']['sections_start'][data['analysis']['songs']['idx_sections_start'][songidx]:])
+    return np.mean(data['analysis']['sections_start'][data['analysis']['songs']['idx_sections_start'][songidx]:
+                                             data['analysis']['songs']['idx_sections_start'][songidx+1]])
 
 def get_sections_confidence(data,songidx=0):
     """
@@ -337,9 +339,9 @@ def get_sections_confidence(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['sections_confidence'][data['analysis']['songs']['idx_sections_confidence'][songidx]:]
-    return data['analysis']['sections_confidence'][data['analysis']['songs']['idx_sections_confidence'][songidx]:
-                                             data['analysis']['songs']['idx_sections_confidence'][songidx+1]]
+        return np.mean(data['analysis']['sections_confidence'][data['analysis']['songs']['idx_sections_confidence'][songidx]:])
+    return np.mean(data['analysis']['sections_confidence'][data['analysis']['songs']['idx_sections_confidence'][songidx]:
+                                             data['analysis']['songs']['idx_sections_confidence'][songidx+1]])
 
 def get_beats_start(data,songidx=0):
     """
@@ -348,9 +350,9 @@ def get_beats_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['beats_start'][data['analysis']['songs']['idx_beats_start'][songidx]:]
-    return data['analysis']['beats_start'][data['analysis']['songs']['idx_beats_start'][songidx]:
-                                             data['analysis']['songs']['idx_beats_start'][songidx+1]]
+        return np.mean(data['analysis']['beats_start'][data['analysis']['songs']['idx_beats_start'][songidx]:])
+    return np.mean(data['analysis']['beats_start'][data['analysis']['songs']['idx_beats_start'][songidx]:
+                                             data['analysis']['songs']['idx_beats_start'][songidx+1]])
 
 def get_beats_confidence(data,songidx=0):
     """
@@ -359,9 +361,9 @@ def get_beats_confidence(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['beats_confidence'][data['analysis']['songs']['idx_beats_confidence'][songidx]:]
-    return data['analysis']['beats_confidence'][data['analysis']['songs']['idx_beats_confidence'][songidx]:
-                                             data['analysis']['songs']['idx_beats_confidence'][songidx+1]]
+        return np.mean(data['analysis']['beats_confidence'][data['analysis']['songs']['idx_beats_confidence'][songidx]:])
+    return np.mean(data['analysis']['beats_confidence'][data['analysis']['songs']['idx_beats_confidence'][songidx]:
+                                             data['analysis']['songs']['idx_beats_confidence'][songidx+1]])
 
 def get_bars_start(data,songidx=0):
     """
@@ -370,9 +372,9 @@ def get_bars_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['bars_start'][data['analysis']['songs']['idx_bars_start'][songidx]:]
-    return data['analysis']['bars_start'][data['analysis']['songs']['idx_bars_start'][songidx]:
-                                             data['analysis']['songs']['idx_bars_start'][songidx+1]]
+        return np.mean(data['analysis']['bars_start'][data['analysis']['songs']['idx_bars_start'][songidx]:])
+    return np.mean(data['analysis']['bars_start'][data['analysis']['songs']['idx_bars_start'][songidx]:
+                                             data['analysis']['songs']['idx_bars_start'][songidx+1]])
     
 
 def get_bars_confidence(data,songidx=0):
@@ -382,9 +384,9 @@ def get_bars_confidence(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['bars_confidence'][data['analysis']['songs']['idx_bars_confidence'][songidx]:]
-    return data['analysis']['bars_confidence'][data['analysis']['songs']['idx_bars_confidence'][songidx]:
-                                             data['analysis']['songs']['idx_bars_confidence'][songidx+1]]
+        return np.mean(data['analysis']['bars_confidence'][data['analysis']['songs']['idx_bars_confidence'][songidx]:])
+    return np.mean(data['analysis']['bars_confidence'][data['analysis']['songs']['idx_bars_confidence'][songidx]:
+                                             data['analysis']['songs']['idx_bars_confidence'][songidx+1]])
 
 def get_tatums_start(data,songidx=0):
     """
@@ -393,9 +395,9 @@ def get_tatums_start(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['tatums_start'][data['analysis']['songs']['idx_tatums_start'][songidx]:]
-    return data['analysis']['tatums_start'][data['analysis']['songs']['idx_tatums_start'][songidx]:
-                                             data['analysis']['songs']['idx_tatums_start'][songidx+1]]
+        return np.mean(data['analysis']['tatums_start'][data['analysis']['songs']['idx_tatums_start'][songidx]:])
+    return np.mean(data['analysis']['tatums_start'][data['analysis']['songs']['idx_tatums_start'][songidx]:
+                                             data['analysis']['songs']['idx_tatums_start'][songidx+1]])
     
 
 def get_tatums_confidence(data,songidx=0):
@@ -405,9 +407,9 @@ def get_tatums_confidence(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['analysis']['songs'].shape[0] == songidx + 1:
-        return data['analysis']['tatums_confidence'][data['analysis']['songs']['idx_tatums_confidence'][songidx]:]
-    return data['analysis']['tatums_confidence'][data['analysis']['songs']['idx_tatums_confidence'][songidx]:
-                                             data['analysis']['songs']['idx_tatums_confidence'][songidx+1]]
+        return np.mean(data['analysis']['tatums_confidence'][data['analysis']['songs']['idx_tatums_confidence'][songidx]:])
+    return np.mean(data['analysis']['tatums_confidence'][data['analysis']['songs']['idx_tatums_confidence'][songidx]:
+                                             data['analysis']['songs']['idx_tatums_confidence'][songidx+1]])
     
 
 def get_artist_mbtags(data,songidx=0):
@@ -417,9 +419,9 @@ def get_artist_mbtags(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['musicbrainz']['songs'].shape[0] == songidx + 1:
-        return data['musicbrainz']['artist_mbtags'][data['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:]
+        return data['musicbrainz']['artist_mbtags'][data['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:].shape
     return data['musicbrainz']['artist_mbtags'][data['metadata']['songs']['idx_artist_mbtags'][songidx]:
-                                             data['metadata']['songs']['idx_artist_mbtags'][songidx+1]]
+                                             data['metadata']['songs']['idx_artist_mbtags'][songidx+1]].shape
     
 
 def get_artist_mbtags_count(data,songidx=0):
@@ -429,12 +431,18 @@ def get_artist_mbtags_count(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['musicbrainz']['songs'].shape[0] == songidx + 1:
-        return data['musicbrainz']['artist_mbtags_count'][data['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:]
+        return data['musicbrainz']['artist_mbtags_count'][data['musicbrainz']['songs']['idx_artist_mbtags'][songidx]:].shape
     return data['musicbrainz']['artist_mbtags_count'][data['metadata']['songs']['idx_artist_mbtags'][songidx]:
-                                             data['metadata']['songs']['idx_artist_mbtags'][songidx+1]]
+                                             data['metadata']['songs']['idx_artist_mbtags'][songidx+1]].shape
         
 def get_year(data,songidx=0):
     """
     Get release year from a HDF5 song file, by default the first song in it
     """
     return data['musicbrainz']['songs']['year'][songidx]
+
+def get_artist_name(data,songidx=0):
+    """
+    Get artist name from a HDF5 song file, by default the first song in it
+    """
+    return data['metadata']['songs']['artist_name'][songidx]
