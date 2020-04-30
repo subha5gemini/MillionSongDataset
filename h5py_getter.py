@@ -122,9 +122,9 @@ def get_artist_terms(data,songidx=0):
     To get a regular numpy ndarray, cast the result to: numpy.array( )
     """
     if data['metadata']['songs'].shape[0] == songidx + 1:
-        return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:].shape
+        return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:]
     return data['metadata']['artist_terms'][data['metadata']['songs']['idx_artist_terms'][songidx]:
-                                            data['metadata']['songs']['idx_artist_terms'][songidx+1]].shape
+                                            data['metadata']['songs']['idx_artist_terms'][songidx+1]]
 
 def get_artist_terms_freq(data,songidx=0):
     """
